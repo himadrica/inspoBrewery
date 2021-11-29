@@ -3,8 +3,7 @@ package com.inspo.solutions.inspoBrewery.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inspo.solutions.inspoBrewery.services.BeerService;
 import com.inspo.solutions.inspoBrewery.web.model.BeerDto;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -37,7 +36,6 @@ public class BeerControllerTest {
 
     BeerDto validBeer;
 
-    @Before
     public void setUp() {
         validBeer = BeerDto.builder().id(UUID.randomUUID())
                 .beerName("Beer1")
@@ -48,17 +46,19 @@ public class BeerControllerTest {
 
     @Test
     public void getBeer() throws Exception {
+        setUp();
         given(beerService.getBeerById(any(UUID.class))).willReturn(validBeer);
 
         mockMvc.perform(get("/api/v1/beer/" + validBeer.getId().toString()).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(validBeer.getId().toString())))
                 .andExpect(jsonPath("$.beerName", is("Beer1")));
     }
 
     @Test
     public void handlePost() throws Exception {
+        setUp();
         //given
         BeerDto beerDto = validBeer;
         beerDto.setId(null);
@@ -76,12 +76,14 @@ public class BeerControllerTest {
 
     @Test
     public void handleUpdate() throws Exception {
+        setUp();
         //given
         BeerDto beerDto = validBeer;
+        beerDto.setId(null);
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
 
         //when
-        mockMvc.perform(put("/api/v1/beer/" + validBeer.getId())
+        mockMvc.perform(put("/api/v1/beer/" + UUID.randomUUID().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(beerDtoJson))
                 .andExpect(status().isNoContent());
