@@ -18,20 +18,42 @@ repositories {
 	mavenCentral()
 }
 
+compileJava {
+	options.compilerArgs = [
+			'-Amapstruct.defaultComponentModel=spring'
+	]
+}
+
 dependencies {
+	def jaxbApiVersion = "2.3.1"
+	def jaxbCoreVersion = "3.0.2"
+	def jaxbImplVersion = "2.1"
+	def jupiterAPI = "5.8.1"
+	def jupiterEngine = "5.8.1"
+	def mapStructVersion = "1.4.2.Final"
+	def lombokVersion = "1.18.22"
+	def mapStructLombok = "0.2.0"
+
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'junit:junit:4.13.1'
-    compileOnly 'org.projectlombok:lombok'
+	implementation "javax.xml.bind:jaxb-api:$jaxbApiVersion"
+	implementation "com.sun.xml.bind:jaxb-core:$jaxbCoreVersion"
+	implementation "javax.xml:jaxb-impl:$jaxbImplVersion"
+	implementation "org.projectlombok:lombok:$lombokVersion"
+	implementation "org.mapstruct:mapstruct:$mapStructVersion"
+	annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+	annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
+	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:$mapStructLombok"
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly ('org.junit.jupiter:junit-jupiter-api:5.8.1'){
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+	testImplementation "org.junit.jupiter:junit-jupiter-api:$jupiterAPI"
+	testImplementation "org.junit.jupiter:junit-jupiter-engine:$jupiterEngine"
 }
 
 test {
