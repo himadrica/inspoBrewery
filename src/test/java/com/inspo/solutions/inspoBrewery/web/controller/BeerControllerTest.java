@@ -3,8 +3,8 @@ package com.inspo.solutions.inspoBrewery.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inspo.solutions.inspoBrewery.services.BeerService;
 import com.inspo.solutions.inspoBrewery.web.model.BeerDto;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,7 +21,7 @@ import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
+@Disabled
 @WebMvcTest(BeerController.class)
 public class BeerControllerTest {
 
